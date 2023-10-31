@@ -1,0 +1,62 @@
+{
+  "name": "wp-vue",
+  "version": "1.1.0",
+  "author": "Alex MacArthur <alex@macarthur.me> (https://macarthur.me)",
+  "description": "A simple Vue blog template that displays posts from any WordPress REST API endpoint.",
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "lint:fix": "eslint ./src --fix",
+    "precommit": "pretty-quick --staged",
+    "prettier": "prettier --write \"./src/**/*.js\""
+  },
+  "bugs": {
+    "url": "https://github.com/alexmacarthur/wp-vue/issues"
+  },
+  "keywords": [
+    "vue",
+    "wordpress",
+    "blog",
+    "REST",
+    "API"
+  ],
+  "homepage": "https://wp.netlify.com",
+  "dependencies": {
+    "vue": "^2.6.11",
+    "vue-analytics": "^5.22.1",
+    "vue-router": "^3.1.6",
+    "vuex": "^3.1.3"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^4.3.1",
+    "@vue/cli-plugin-eslint": "^4.3.1",
+    "@vue/cli-service": "^4.3.1",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^4.3.0",
+    "eslint-plugin-vue": "^5.2.3",
+    "husky": "^2.7.0",
+    "node-sass": "^4.13.1",
+    "prettier": "^1.19.1",
+    "pretty-quick": "^1.11.1",
+    "sass-loader": "^7.3.1",
+    "style-resources-loader": "^1.3.3",
+    "vue-cli-plugin-style-resources-loader": "^0.1.4",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alexmacarthur/wp-vue"
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
+}

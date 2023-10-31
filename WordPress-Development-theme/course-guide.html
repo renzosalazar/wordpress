@@ -1,0 +1,2042 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Course Guide - WordPress Developer</title>
+        <script src="../jquery-v3.5.1.js"></script>
+        <link rel="stylesheet" href="../jquery-ui-1.12.1/jquery-ui-1.12.1/jquery-ui.min.css">
+        <style>
+            body {
+                background-color: #333;
+                padding: 60px;
+            }
+            p {
+                color: #ddd;
+            }
+            .ui-accordion-header-active {
+                background-color: #aaa;
+            }
+            .ui-widget-content {
+                background-color: #444;
+            }
+            h5 {
+                color: aquamarine;
+            }
+            pre {
+                background-color: #555;
+                color: #ddd;
+                padding: 30px 10px;
+            }
+            span {
+                color:yellow;
+                font-size: 16px;
+            }
+        </style>
+    </head>
+    <body>
+
+        <div id="accordion" >
+            <h3> Security </h3>
+            <div>
+                <pre>
+                  // to sanitize input fields - a php method
+                   sanitize_text_field()
+
+                   the esc_html() will take care the converting the text
+                   within the inner parenthesis
+
+                   now instead of as a value
+                   dont worry about the escaping on get_search_query(false)
+                   becuase daw ung esc_html() ung nag handle non
+
+                   to handle the malicous code
+                   esc_html( get_search_query(false) )
+               </pre>
+            </div>
+            <h3> Course Javascript </h3>
+            <div>
+                <pre>
+                <span>
+                // here. put your focus on this.searchField.focus()
+                // what it does is to add focus on search field
+                // when users click - explained at f14v58 - 620
+                // we use set timeout to let the page load before adding focus
+                </span>                    
+
+                     openOverlay(){
+
+                    this.searchOverlay.addClass('search-overlay--active');
+                    $('body').addClass('body-no-scroll');
+                    setTimeout( () => this.searchField.focus() ,301)
+                    this.isOverlayOpen = true;
+                }
+               </pre>
+            </div>
+            <h3> Course Functions | WordPress Functions </h3>
+            <div>
+
+                <pre>
+                   steps in creating Custom Post Type 
+                   - create on mu-plugins folder
+                   - register it to .php file
+                   - create single-[CPTname]
+                   - copy the single- HTML file to reduce coding
+                   - create condition to display on front-end
+                   - addjust the filter
+
+                   - create archive - for its unique content
+                   - 
+               </pre>
+                <h5>WordPress Functions</h5>
+                <pre>
+
+               wp_reset_postdata(); always put this at the end of the loop
+               while() - loop
+               the_title()
+               the_content()
+               get_the_ID()
+               wp_list_pages() - outputing the list of pages
+               get_pages - return the pages in memory. whaaaT???
+               get_the_title( wp_get_post_parent_id( get_the_ID() ) ) - this will work really nicely if this returns zero means the current page is the parent page
+
+               the_author_posts_link();
+               the_date(); 
+               the_time('n.j.y') - from the course
+               the_time('M') - big letter M - Month
+               the_time('d') - small letter d Day
+
+               the_category()
+               echo get_the_category_list(', ') - gives the category
+
+               echo paginate_links() - shows the pagination
+
+                the_archive_title(); - shows the title for, author, category, dates
+                the_archive_description() - gives the archive description of course!
+                wp_trim_words(get_the_content(), 10) - 1st arg is the content we want to limit - 2nd args is how many words
+
+                echo get_post_type_archive_link('event') - to get the permalink of the archive ?? whattt??
+
+
+                has_excerpt() - usually for ir condition
+                            - will return a value of TRU if the current
+                            post has a hand-crafted excerpt
+
+                get_post_type_archive_link('event') - give the correct CPT link
+
+                get_post_type()  = can use in if condition - will return the current CPT
+
+
+                <h5> HUSAY THIS we can use or create as many of this as we want -  </h5>
+                //f14v57 - 12:00 - you watch
+                // will let us output a little bit of JS data into source
+                // 1st arg - the name of the handle of our main JS file
+                // dapat daw match kung nasan ung main JS file - pero gamit lang ung name ng handle as argument
+                // 2nd arg - gawagawa ng variable  name
+                // 3rd arg - an array of data that we want to be availabe in Javascript
+                wp_localize_script('main-university-js', 'universityData', array(
+
+                'root_url' => get_site_url()
+
+                ) );
+        </pre>
+                <h5> Advance Custom Fields</h5>
+                <pre>
+
+                    get_post_field() - for pick date - if get_field() doesnt work
+
+                    $eventDate = new DateTime( get_post_field('event_date')) ;
+                    echo $eventDate->format('M');
+
+                    is_page('past-events') - kung nasa page tayo ng post type
+
+                    is_admin() - will return true if we are on the admin portion of the website.
+                    !is_admin() - will return true if we are on the front-end portion of the website.
+
+
+                   $pageBannerImage = get_field('page_banner_background_image'); echo $pageBannerImage['url']
+                </pre>
+
+                <h5> Hooks </h5>    
+                <pre>
+                                   // true to allow crop - false no crop
+                                add_image_size('nickname','wide', 'tall', TRUE or FALSE)
+                            </pre>
+            </div>
+            <h3>Hierarchy WordPress</h3>
+            <div>
+                <h5>Functions</h5>
+
+                <pre>
+
+                   every custom post type has - single-[CTPname], archive-[CPTname]
+
+                    index.php - universal fallback - the blog page can use this
+                              - pang blog talga ata sya? video 30 still using this as a blog page
+
+                    single.php - is when we click to link from a post.
+                             - the single.php page will be use and show content
+                             - eto ung pag click ng blog ( index.php ) pupunta dito. 
+                             - only uses the single.php for individual posts for individual pages ( ung  reading kana ng blog)
+
+                    single-[CUSTOM POST TYPE] - dito pupunta ung post ng custom post type
+
+                    page.php - will serve all the pages
+
+                    archive.php - will serve the - author page, category page, date page
+
+                    archive-[CUSTOM POST TYPE] - this will serve as the archive page for CPT
+                    - just copy the HTML of archive.php - 
+
+                    front-page.php - is for home page
+
+                </pre>
+            </div>
+            <h3>Plugins installed during course</h3>
+            <div>
+                <pre>
+                    Advance Custom Field - Elliot Condon
+                    Regenerate Thumbnails - By Alex Mills (Viper007Bond)
+
+                </pre>
+            </div>
+
+
+            <h3  class="table-tab">F3v1 - Create Theme style.css</h3>
+            <div>
+                <h5>create theme</h5>
+                <p>
+                    go to style.css, write at the top
+                </p>
+                <pre>
+
+                    Theme Name: your theme name
+                    Author: your name
+                    Version: theme version 1.0
+                    name the thumbnail image screenshot
+                </pre>
+
+
+            </div>
+
+            <h3>To note when creating relationship on post_type</h3>
+            <div>
+
+                <pre>
+                <h5>
+                    remember that WordPress only Query 10 posts at a time
+                </h5>
+            </pre>
+                <pre>
+                if the Advance Custom Field variable that we create is already under the
+                post_type -- there is no need to create a filter -- becoz we can just call it there.
+                gets moba ? 
+            </pre>
+                <h5> To loop inside foreach</h5>
+                <pre>
+                 $relatedCampus = get_field('related_campuses');
+
+            if($relatedCampus){
+                echo '[h2 class="headline headline--medium" >' . get_the_title() . ' is Available at these Campuses: [/h2]';
+
+                foreach($relatedCampus as $campus ){  ?>
+                li
+                    a href="[?php echo get_the_permalink($campus)?]" [?php echo get_the_title($campus) ?]
+                    /a
+                /li
+            [?php
+                }
+            }
+            </pre>
+            </div>
+
+
+
+
+            <h3>f410 -  WordPress Loops</h3>
+            <div>
+                <h5>Functions</h5>
+                <pre>
+                while(have_posts()){
+                the_post()
+                href="the_permalink" the_title() 
+                the_content()
+                }
+                </pre>
+                <h5>
+                    single.php
+                </h5>
+                <pre>
+
+                </pre>
+            </div>
+
+            <h3>f411 - header and footer </h3>
+            <div>
+                <pre>
+                function university_files(){
+        //1st argument - chosen name for function
+        //2nd argument - url
+        wp_enqueue_style('university_main_styles', get_stylesheet_uri() ); 
+        }
+
+        //1st argument - what type of instructions
+        //2nd argument - name of the function 
+        add_action('wp_enqueue_scripts','university_files');
+
+
+            </pre>
+
+
+            </div>   
+
+            <h3>f412 -  - HTML to WordPress </h3>
+            <div>
+                <h5> added aditional CSS to functions and copying static HTML to wordpress</h5>
+                <pre>
+                //1st argument - chosen name for function
+                //2nd argument - url
+                //3rd argument - WordPress wants to know if this script depends on in other script
+                //if it depending on other dependencies? - no so NULL
+                // 4th in CSS - microtime() - to remove caching in css.
+
+                wp_enqueue_style('university_main_styles', get_stylesheet_uri(), NULL, microtime() ); 
+                wp_enqueue_style('custom-google-font', '//fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,300,400,400i,700,700i' ); 
+
+                wp_enqueue_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' ); 
+            </pre>
+
+                <pre>
+
+                //3rd argument - WordPress wants to know if this script depends on in other script
+                //if it depending on other dependencies? - no so NULL
+                //4th argument - What is the version but in local dev we need microtime.
+                //microtime - to remove caching of css and js
+                //5th argument - if we want to load it before closing body tag. Yes (True) or No (False)
+                // TRUE - going to the bottom of body tag
+                wp_enqueue_script('main-university-js', get_theme_file_uri('/js/scripts-bundled.js'), NULL, microtime() , TRUE  );
+                </pre>
+
+                <pre>
+                 //1st argument - chosen name for function
+                //2nd argument - url
+                //3rd argument - WordPress wants to know if this script depends on in other script
+                //if it depending on other dependencies? - no so NULL
+                // 4th in CSS - microtime() - to remove caching in css.
+
+                wp_enqueue_style('university_main_styles', get_stylesheet_uri(), NULL, microtime() ); 
+            </pre>
+            </div>   
+
+            <h3>f413 - Prevent Caching CSS and JS Dev </h3>
+            <div>
+                <h5> short vid</h5>
+                <pre>
+                 //microtime - to remove caching of css and js
+                    wp_enqueue_script('main-university-js', get_theme_file_uri('/js/scripts-bundled.js'), NULL, microtime() , TRUE  );
+            </pre>  
+
+            </div>
+
+            <h3>f5v14 - integrate interior page  </h3>
+            <div>
+                <h5> adding theme features </h5>
+                <pre>
+
+                    function university_features(){
+                        //theme functions
+                        add_theme_support('title-tag');  
+                    }
+
+                    //1st argument - wordpress event
+                    //2nd args - function - a name of function we will invent
+                    add_action('after_setup_theme', 'university_features')
+                 </pre>
+
+
+            </div>    
+
+            <h3>f5v15 - Parent and Children Pages | with [if] statement   </h3>
+            <div>
+                <h5> Parent and Child Theme relation </h5>
+                <pre>
+                    we create OUR HISTORY page. then on page attribute ( right side panel )
+                    instead of no paren we choose ABOUT US 
+                    Same in creating OUR GOAL PAGE
+               </pre>
+
+                <h5> Get the parent ID </h5>
+                <pre>
+                echo get_the_ID() - will give us the page ID
+
+                wp_get_post_parent_id(get_the_ID()) - it will give us the ID of the parent page
+                - or we want to know if the current page has a parent page - and give the parenthesis an argument of the page ID
+                - it will give us [0] zero, if it has no parent page.
+                - now if its has a parent page i will give us integer any value.
+
+
+                the_title() - will give you the current page title 
+                get_the_title(get_the_ID()) - allows us to pass an ID number the title for that post instead of just the current post that you've looped through.
+            </pre>
+
+                <h5> echo or not echo </h5>
+                <pre>
+                all wp function starts with [get]
+                will not echo the value instead use the [echo]
+                to output it out
+            </pre>
+            </div>
+            <h3> f5v17 - Menu of Child Page Links | hirap dito men pero nagets ko | </h3>
+            <div>
+                <h5>Angaling dito .</h5>
+                <pre>
+                       get_the_title( wp_get_post_parent_id( get_the_ID() ) ) 
+                       - this will work really nicely if this returns zero means the current page is the parent page
+                </pre>
+
+
+                <pre>
+                    $testArray = get_pages( array(
+                         'child_of'   => get_the_ID()  //-- if the current page has children this function wil return a collection of any and all children
+
+                         - on the other hand if the pages doesnt have any children this function won't return anything - it will return NULL of False
+                    ))
+
+                    -     
+                </pre>
+                <h5> Pusang gala - sana maalala ko nog?</h5>
+                <pre>
+
+        $parentPageID  = wp_get_post_parent_id( get_the_ID() );
+
+
+         if (  $parentPageID  )
+
+
+        if( $parentPageID ){
+            $findChildrenOf = $parentPageID;
+        } else {
+            $findChildrenOf = get_the_ID();
+        }
+          wp_list_pages( array(
+          //title_li is empty 
+         //child_of - numerical ID of a certain page or post
+          //sort_column => 'menu_order' we can choose the order output of link -
+        // ^ you can control this on right panel and choose the order number
+          'title_li' => NULL,
+          'child_of' => $findChildrenOf,
+           'sort_column' => 'menu_order'
+      ))
+
+                </pre>
+            </div>
+
+
+            <h3> f5v18 - Quick Edits</h3>
+            <div>
+                <pre>
+                       language-attributes()
+                       charset=bloginfo('charset')
+                       body_class()
+
+                        </pre>
+            </div>
+
+
+            <h3>f5v19 - Navigation Menus </h3>
+            <div>
+                <h5>Dynamic</h5>
+                <pre>
+
+                register_nav_menu('footerMenuLocationOne', 'Footer Menu Location One');
+
+                wp_nav_menu(array(
+                  'theme_location' => 'footerMenuLocationOne'
+
+                </pre>
+                <h5> Custom</h5>
+                <pre>
+                   If we are on the current page the menu link will lit
+
+                    [?php if( is_page('about-us') or wp_get_post_parent_id(0) == 10) echo 'class="current-menu-item"' ?] >[a href="[?php echo site_url('/about-us')  ?]" About Us[/a]
+
+                </pre>
+            </div>
+
+            <h3>f6v22 - Blog Archives | ung author and category page </h3>
+            <div>
+                <h5>Author and Category the old way </h5>
+                <pre>
+                    if( is_category() ){
+                        single_cat_title();
+                    }
+                         if( is_author() ){
+                            echo 'Posts by :  ';    the_author();
+                         }
+                </pre>
+                <h5> Author, Category, Dates - Dynamic</h5>
+                <pre>
+                the_archive_title() - gives the title of author, category, dates
+
+                the_archive_description()
+                </pre>
+            </div>
+
+            <h3>f623 - Custom Queries | Finally </h3>
+            <div>
+                <h5> in f15v63 - we created a new way how to create this outside this front-end.php file</h5>
+                <pre>
+              $homepagePosts = new WP_Query(array(
+                        'posts_per_page' => 2
+                    ));
+
+                 while( $homepagePosts->have_posts()  ){
+             $homepagePosts->the_post();
+               </pre>
+                <pre>
+                    wp_trim_words(get_the_content(), 10)
+
+                    1st args- is what we want to trim
+                    2nd args how may words we display
+                </pre>
+
+                <h5> Important </h5>
+                <pre>
+                   always put this at the end of the loop
+                    wp_reset_postdata();
+
+                    this will reset the different WordPress Data and global variables back 
+                    to the state that it was in when it made its default automatic query based on the
+                    current URL right before we came along and made a custom query
+
+                    calling this function is not 100% necessary specially if youre towards 
+                    the bottom of the template file, but its a really good habit to get into 
+                </pre>
+
+            </div>
+
+
+            <h3>f726 -   </h3>
+            <div></div>
+
+            <h3>f7v27 and 28 - GULP WATCH Auto loading fronpage CSS and JS</h3>
+            <div></div>
+
+            <h3> f9v29 - Custom Post Types </h3>
+            <div>
+                <h5>Put it in /wp-content/ create mu-plugins folder then create php file</h5>
+                <pre>
+
+                    function university_post_types(){
+
+                        //public - this will make visible to editors and viewers of the website
+                        //labels -> name -> the name on side panel 
+                        //has_archive -> true - to tell WP to create an archive page for this CPT
+                        //'rewrite' => array('slug' => 'events') -- will change the URL link from singular to plural - ['slug' => 'events'] we can actually invent the word 'events'  to pizza or anything!
+                        register_post_type('event', array(
+                            'rewrite' => array('slug' => 'events'),
+                            'has_archive' => true,
+                            'public' => true,
+                            'labels' => array(
+                                'name' => 'Events',
+                                'add_new_item' => 'Add New Event',
+                                'edit_item' => 'Edit Event',
+                                'all_items' => 'All Events',
+                                'singular_name' => 'Event'
+                            ),
+                            'menu_icon' => 'dashicons-calendar'
+                        ));
+                    }
+
+                    // 1st args a hook
+                    // name of a function
+                    add_action('init', 'university_post_types');
+
+
+                </pre>
+
+                <pre>
+                    So if ever the theme file deactivated the post type will still be there.
+                </pre>
+            </div>
+
+
+            <h3> f9v30 - Displaying Custom Post Type </h3>
+            <div> 
+
+                <pre>
+                gumawa ng single-[Custom-Post-Type-Name-HERE] - para dun sa mga post 
+
+                gumawa ng achive-[Custom-Post-Type-Name-HERE] - para dun sa pinaka page ng Custom-Post-Type-Name-HERE 
+
+                ginamit ung HTML ng single.php sa single-[Custom-Post-Type-Name-HERE]
+
+                ginamit ung HTML ng archive.php sa archive-[Custom-Post-Type-Name-HERE]
+
+                inedit lang ng unti
+
+                nirefresh ung permalink para marefresh ung site URLS
+
+
+            </pre>
+
+                <pre>
+
+                                function university_post_types(){
+
+                    //public - this will make visible to editors and viewers of the website
+                    //labels -> name -> the name on side panel 
+                    //has_archive -> true - to tell WP to create an archive page for this CPT
+                    //'rewrite' => array('slug' => 'events') -- will change the URL link from singular to plural - ['slug' => 'events'] we can actually invent the word 'events'  to pizza or anything!
+                    register_post_type('event', array(
+                        'rewrite' => array('slug' => 'events'),
+                        'has_archive' => true,
+                        'public' => true,
+                        'labels' => array(
+                            'name' => 'Events',
+                            'add_new_item' => 'Add New Event',
+                            'edit_item' => 'Edit Event',
+                            'all_items' => 'All Events',
+                            'singular_name' => 'Event'
+                        ),
+                        'menu_icon' => 'dashicons-calendar'
+                    ));
+                }
+
+                // 1st args a hook
+                // name of a function
+                add_action('init', 'university_post_types');
+
+
+            </pre>
+
+            </div>
+
+            <h3>f9v31 - Quick edit - wp_trim_words() + the_excerpt() </h3>
+            <div>
+                <h5> Combination </h5>
+                <pre>
+                    if( has_excerpt() ) {
+                           echo get_the_excerpt();          
+            } else {
+                echo wp_trim_words(get_the_content(), 18 );
+            }
+                </pre>
+
+                <pre>
+
+                get_post_type_archive_link('event') - give the correct CPT link
+
+                get_post_type()  = can use in if condition - will return the current CPT
+                </pre>
+            </div>
+
+            <h3>f9v32 - Advanced Custom Fields </h3>
+            <div>
+                <pre>
+                We create custom field then ouput it in fron-end
+
+                get_post_field()
+                </pre>
+            </div>
+
+            <h3>f9v33 - Advance Custom Fields - ordering | sorting</h3>
+            <div>
+                <h5>1st introduction of the meta_queries</h5>
+                <pre>
+
+                //post_per_page - kung ilan lilitaw dun sa fron-end
+                //post_type - kung anong post type
+                // orderby - post_date - the date that the post was created or published
+                // ^       - value [post_date] is the default value
+                //^ value [title] - will be alphabetically
+                //^ orderby->rand - post will be random
+                //^ orderby->meta_value_num - it need the meta_key 1st - then the value means that the orderby will be base on any value of Post Type.
+                // meta_key-event_date - the ACF variabe
+                // 'posts_per_page' => -1, -1 meaning the WP will give all the posts
+                // order -> DESC - post will be descending 
+                // order -> ASC - post will be Ascending 
+
+                // meta_query - array-> 
+                //  ^key - the ACF
+                //  ^compare - the condition
+                //  ^value  - here is date $today
+                $today = date('Ymd');
+                     $eventPostType = new WP_Query(array(
+                         'posts_per_page'   => 2,
+                         'post_type'        => 'event',
+                         'meta_key'         => 'event_date',
+                         'orderby'          => 'meta_value_num',
+                         'order'            => 'ASC',
+                         'meta_query' => array(
+                             array(
+                                 'key'      => 'event_date',
+                                 'compare'  => '>=',
+                                 'value'    =>   $today,
+                                 'type'     => 'numeric'
+                             )
+                         )
+                </pre>
+            </div>
+
+            <h3>f934 - Manipulating Defaul URL Based Queries</h3>
+            <div>
+                <h5> and nagyare - nag karoon ng pagination ung posts pages - ung post type and blog page . without using pagination() function</h5>
+                <h5> kahit ung sa backend sa WP panel naging isa nalang ung post! which is 3 un! </h5>
+                <h5>very powerful!</h5>
+                <h5> 1st explain </h5>
+                <pre>
+            function university_adjust_queries($query){
+                // set has 2 args
+                //1st args is the name of a query parameter that we want to change
+                // the value that we want to use
+                $query->set('posts_per_page', '1');
+            }
+
+            //pre_get_posts - ryt before we get the post with the query
+            // its going to give a reference to the wordpress query object
+            add_action('pre_get_posts', 'university_adjust_queries');
+
+
+                </pre>
+                <h5>2nd explain</h5>
+                <pre>
+
+                    function university_adjust_queries($query){
+                        // set has 2 args
+                        //1st args is the name of a query parameter that we want to change
+                        // the value that we want to use
+                        //$query->set('posts_per_page', '1');
+                        //if not in the admin -
+                        // kung nasa post type archive event daw tayo
+                        //$query so if daw the $query that is being passed into our function
+                        // the $query then we can look for a method named is_main_query() 
+                        // so this way daw we cannot accidentally manipulate a custom query
+                        // $query->is_main_query() - will only evaluate to true if
+                        // the query in question is the default URL based query
+                        //Always perform 1 more check
+                        if ( !is_admin() AND is_post_type_archive('event') AND $query->is_main_query() ) {
+                            $query->set('posts_per_page', '1');
+                        }
+                    }
+
+                    //pre_get_posts - ryt before we get the post with the query
+                    // its going to give a reference to the wordpress query object
+                    add_action('pre_get_posts', 'university_adjust_queries');
+
+                </pre>
+
+                <h5>final explain | para imbes na gwin dun sa pinaka file for example index.php, dito nalang sya sa functions.php gagawin, para mas malinis. so ganto ang pag gawa ng custom post type sa function.php</h5>
+                <pre>
+
+                function university_adjust_queries($query){
+                    // set has 2 args
+                    //1st args is the name of a query parameter that we want to change
+                    // the value that we want to use
+                    //$query->set('posts_per_page', '1');
+                    //if not in the admin -
+                    // kung nasa post type archive event daw tayo
+                    //$query so if daw the $query that is being passed into our function
+                    // the $query then we can look for a method named is_main_query() 
+                    // so this way daw we cannot accidentally manipulate a custom query
+                    // $query->is_main_query() - will only evaluate to true if
+                    // the query in question is the default URL based query
+                    //Always perform 1 more check
+                    if ( !is_admin() AND is_post_type_archive('event') AND $query->is_main_query() ) {
+
+                        // this query is to not show the past events. VERY POWERFUL!
+
+                        $today = date('Ymd');
+                        $query->set('meta_key', 'event_date');
+                        $query->set('orderby', 'meta_value_num');
+                        $query->set('order', 'ASC');
+                        $query->set('meta_query', array(
+                            array(
+                                'key'      => 'event_date',
+                                'compare'  => '>=',
+                                'value'    =>   $today,
+                                'type'     => 'numeric'
+                            )
+                        )
+                                   );
+
+                    }
+                }
+
+                //pre_get_posts - ryt before we get the post with the query
+                // its going to give a reference to the wordpress query object
+                add_action('pre_get_posts', 'university_adjust_queries');
+
+                </pre>
+            </div>
+
+            <h3>f9v35 - Past Events Page - Custom Query Pagination </h3>
+            <div>
+                <pre>
+                   echo paginate_links() will display the default URL base queries, so if we want to display custom post type pagination we need to create function like below.
+               </pre>
+                <pre>
+                    echo paginate_links(array(
+                'total' => $pastEvents->max_num_pages
+
+));
+                </pre>
+            </div>
+
+            <h3>f9v36 - Creating Programs Post Type | creating relationship between content</h3>
+            <div>
+
+                <pre>
+                 //the 3rd condition - if only the $query in question can look inside its main 
+                    //query -- so that way we dont manipulate any secondary custom quries,
+                    // we only want to manipulate the main default URL based query
+                    // this is the safest condition check
+                    if( !is_admin() AND is_post_type_archive('program') AND $query->is_main_query() ) {
+                        $query->set('orderby','title');
+                        $query->set('order','ASC'); 
+                        $query->set('post_per_page', 5); 
+                    }
+                </pre>
+
+                <h5>Creating relationship between Program and Event</h5>
+
+                <pre>
+                    Gumawa kami sa Advance Custom Fields - ang notable na gina is -
+                    ung filter by post type is [Program] 
+                    - tapos ung dun sa Location na sa baba - ung show this field group if - is equal - Event
+
+                    <h5> And nangyari - nag karon ng relationship form dun sa Program post type </h5>
+
+                    <pre>
+                        next video - displaying to fron-end
+                    </pre>
+                </pre>
+
+            </div>
+            <h3>f937 - Displaying Relationship to front-end</h3>
+            <div>
+                <h5>
+                    kapag my foreach - we need to use echo get_the_whatever, para gumana
+                </h5>
+                <pre>
+
+
+               $relatedPrograms = get_field('related_programs');
+
+                foreach($relatedPrograms as $program ){    ?>
+
+                 href="php echo get_the_permalink($program) "> php echo get_the_title(); 
+
+                </pre>
+
+                <h5>In single-programs.php - we create 2 filters </h5>
+
+
+                <pre>
+
+                    //post_per_page - kung ilan lilitaw dun sa fron-end
+                    //post_type - kung anong post type
+                    // orderby - post_date - the date that the post was created or published
+                    // ^       - value [post_date] is the default value
+                    //^ value [title] - will be alphabetically
+                    //^ orderby->rand - post will be random
+                    //^ orderby->meta_value_num - it need the meta_key 1st - then the value means that the orderby will be base on any value of Post Type.
+                    // meta_key-event_date - the ACF variabe
+                    // 'posts_per_page' => -1, -1 meaning the WP will give all the posts
+                    // order -> DESC - post will be descending 
+                    // order -> ASC - post will be Ascending 
+
+                    // meta_query - array-> 
+                    //  ^key - the ACF
+                    //  ^compare - the condition
+                    //  ^value  - here is date $today
+                    $today = date('Ymd');
+                         $eventPostType = new WP_Query(array(
+                             'posts_per_page'   => 2,
+                             'post_type'        => 'event',
+                             'meta_key'         => 'event_date',
+                             'orderby'          => 'meta_value_num',
+                             'order'            => 'ASC',
+                             'meta_query' => array(
+                                 array(
+                                     'key'      => 'event_date',
+                                     'compare'  => '>=',
+                                     'value'    =>   $today,
+                                     'type'     => 'numeric'
+                                 ),
+                                 <h5>this is the 2nd filter </h5>
+                                 --------------------------------------------
+                                  array(
+                                     'key'      => 'related_programs',
+                                     'compare'  => 'LIKE',
+                                     'value'    =>  '"'. get_the_ID()  .'"'
+                                 )
+                                 --------------------------------------------
+                             )
+
+                         ));
+
+                </pre>
+                <h5> 
+                    Flashback - its from folder 12 video 48 
+                    a broader explain
+                </h5>
+                <pre>
+                               //post_per_page - kung ilan lilitaw dun sa fron-end
+            // 'posts_per_page' => -1, -1 meaning the WP will give all the 
+            //post_type - kung anong post type
+            // orderby - post_date - the date that the post was created or published
+            // ^       - value [post_date] is the default value
+            //^ value [title] - will be alphabetically
+            //^ orderby->rand - post will be random
+            //^ orderby->meta_value_num - it need the meta_key 1st - then the value means that the orderby will be base on any value of Post Type.
+            // meta_key-event_date - the ACF variabe posts
+            // order -> DESC - post will be descending 
+            // order -> ASC - post will be Ascending 
+
+            // meta_query is parang filter 
+            // so its looking for a KEY - which is the POST TYPE
+            // meta_query - array-> 
+            //  ^key - the ACF
+            //  ^compare - the condition
+            //  ^value  - here is date $today
+
+            // to sum up on meta_query = 
+            // ^ the post type program is looking for a 
+            // meta_query that has a KEY 'related_campus'
+            // that LIKE - means exactly
+            // thas has a VALUE of the current campus that we are viewing
+            // 
+
+            // we are creating this new query to give us any program post
+            //  that has relation on related_campuse post type
+            $relatedPrograms = new WP_Query(array(
+                'posts_per_page'   => -1,
+                'post_type'        => 'program',
+                'orderby'          => 'title',
+                'order'            => 'ASC',
+                'meta_query' => array(
+                    array(
+                        'key'      => 'related_campuses',
+                        'compare'  => 'LIKE',
+                        'value'    =>  '"'. get_the_ID() .'"'
+                    )
+                )
+
+            ));
+
+                </pre>
+            </div>
+
+            <h3> f9v38 - Quick Edits </h3>
+            <div>
+
+                <h5>     single-program.php </h5>
+                <pre>
+        Nilagyan lang ng IF condition.
+                </pre>
+                <pre>
+                     /* IF CONDITION */
+    /* para hindi mag appear ung UPCOMING EVENTS na title tag
+    tapos sa loob nun ung content na relation nun sa event?? gets moba ? ano kaya pa?
+    */
+
+    if($eventPostType->have_posts()) { 
+
+
+                </pre>
+            </div>
+            <h3>f10v39 - Professor Post Type</h3>
+            <div>
+                <pre>
+                  $relatedProfessor = new WP_Query(array(
+                        'posts_per_page'   => -1,
+                        'post_type'        => 'professor',
+                        'orderby'          => 'title',
+                        'order'            => 'ASC',
+                        'meta_query' => array(
+                            array(
+                                'key'      => 'related_programs',
+                                'compare'  => 'LIKE',
+                                'value'    =>  '"'. get_the_ID() .'"'
+                            )
+                        )
+
+                    ));
+                </pre>
+                <pre>
+                    wp_reset_postdata();
+                </pre>
+
+                video stop at 15:40
+            </div>
+            <h3>f1040 - Featured Image (post thumbnails)</h3>
+            <div>
+                <pre>
+                    //1st arg nickname for the image size - any name
+                    // image wide - 400 - tall - 260
+                    // 3rd image - if we want to crop - FALSE
+                    // if we want the image to be exactly this wide
+                    // and exactly this tall, we need to give it TRUE
+                    add_image_size('professorLandscape', 400, 260, true);
+
+                    add_image_size('professorPortrait', 480, 650, true);
+
+
+
+                    go to functions -  add_theme_support('post-thumbnails');  
+                </pre>
+                <pre>
+                    go to mu-plugins folder - add in the supports array
+                       register_post_type('professor', array(
+            'supports' => array('title', 'editor', 'thumbnail'),
+            'public' => true,
+            'labels' => array(
+            'name' => 'Professor',
+            'add_new_item' => 'Add New Professor',
+            'edit_item' => 'Edit Professor',
+            'all_items' => 'All Professor',
+            'singular_name' => 'Professor'
+        ),
+        'menu_icon' => 'dashicons-welcome-learn-more'
+    ));
+                </pre>
+            </div>
+            <h3>f1041 - Featured Image Sizes & Cropping </h3>
+            <div>
+                <pre>
+
+                   from video 40 - use the created nickname on the function the_post_thumbnail
+
+                    the_post_thumbnail('professorPortrait);
+
+                    but the thing is WordPress - generates and use the correct image size
+                </pre>
+            </div>
+
+            <h3>f10v42 - Page banner dynamic background image </h3>
+            <div>
+                <pre>
+                   <h5> to get the image link do this </h5> 
+                    $pageBannerImage = get_field('page_banner_background_image'); echo $pageBannerImage['url']
+                </pre>
+            </div>
+
+            <h3>f11v43 - Reduce Duplicate Code | REUSABLE CODE ETO MAGANDA!! </h3>
+            <div>
+                <pre>
+                    //php logic will live here
+                    // !args['title] - if the title is not passed into it - and if thats the case,
+                    //then let's just set the title field for that post or page
+                    // kung ung $args e wala dun sa fron-end for example sa single.php
+                    // kung wala edi dito sa function nato kukunin ung value
+
+
+
+                    function pageBanner($args = NULL ){
+
+                        if( !$args['title'] ){
+                            $args['title'] = get_the_title();
+                        }     
+                        if( !$args['sub-title'] ){
+                            $args['sub-title'] = get_field('page_banner_subtitle');
+                        } 
+                        if ( !$args['photo']){
+                            if(get_field('page_banner_background_image')){
+                            $args['photo']     =  get_field('page_banner_background_image')['sizes']['pageBanner'];
+                            } else {
+                            $args['photo']     =  get_theme_file_uri('/images/ocean.jpg');
+
+                                }
+                        }
+
+
+                </pre>
+                <h5>ganto exaple nang merong laman dun sa single.php  or to any pages na nakalagay ung function</h5>
+                <pre>
+                    pageBanner(array(
+                    'title' => 'Past Events',
+                    'sub-title'  => 'A recap of our past events.'
+
+                ))
+                </pre>
+            </div>
+
+            <h3>f11v45 - Reduce Duplication - get_template_part() </h3>
+
+            <div>
+                <h5>
+                    function in function.php or get_template_part()?
+
+                </h5>
+                <pre>
+                   choose function if - we have argument to pass
+                   choose get_template_part() - if the code is just HTML and has no argument
+               </pre>
+                <pre>
+
+                    //1st arg - the location of the file -
+                    //2nd it can be post_type function - basta 
+                    get_template_part('template-parts/content', 'event');
+
+                    //kung walang pag gagamitan nung 2nd argument
+                    // pwedeng wag na lagyan
+                    get_template_part('template-parts/content-event');
+                </pre>
+            </div>
+            <h3>f12v46 -Campus Post Type | Google Maps API </h3>
+            <div>
+                <h5>
+                    The plugin gave us data to work with -- to manipulate a property of it, then we return it after
+                </h5>
+                <pre>
+                   ganto gumawa ng filter dun sa pinaka plugin. 
+               </pre>
+                <pre>
+
+                    function UniversityMapKey($api){
+
+                        $api['key'] => 'AIzaSyAM3Atagj_1Dlqu9n-csTBSQd_hLRPkzXw';
+                        return $api;
+
+                    }
+                    //1st args to target the Advanced Custom Fields and let it know
+                    // that we have Google Maps API
+                    add_filter('acf/fields/google_map/api', 'UniversityMapKey');
+
+                </pre>
+            </div>
+            <h3>f12v47 - Campus Map on Front-end </h3>
+            <div>
+                <h5>
+                    Nahirapan ako dito !!!
+                </h5>
+                <pre>
+                   make sure na ung nasa university-static file na webpack.config.js and package.json
+                   is kinopy and paste mo - tapos - npm install ka sa terminal para maupdate ung modules.
+
+                   ilagay mo sa taas ung MAP KEY sa functions.php - i mean sa unahan -
+                   npm run gulpscripts - para macompile ung JS tapos npm run gulpstyles naman para makompile
+                   ung CSS - 
+
+                   kopyahin mo ung pinaka link key dun sa Javascript maps. tapos idedit mo nalang ung key.
+
+                   tangaling mo ung [import "../css/style.css"] dun sa script.js
+               </pre>
+                <h5> put this on function.php</h5>
+                <pre>
+                      // we start [//] for 2nd args so the web will not throw error
+                wp_enqueue_script('googleMap', '//maps.googleapis.com/map/api/js?key=AIzaSyD-rsOXjG5-vXQEjd-YFC4zBBEEAb8tl6w', NULL, '1.3' , TRUE  );
+                </pre>
+
+                <h5>Put this on archive-campus.php</h5>
+
+                <pre>
+                    div class="acf-map"
+                     while( have_posts()  ){
+                    the_post(); 
+                    $mapLocation = get_field('map_location');
+                    ?>
+
+                    div class="marker" data-lat='<?php echo $mapLocation['lat'] ?>' data-lng='<?php echo $mapLocation['lng'] ?>' >
+                    div
+                    div
+                </pre>
+            </div>
+
+            <h3>f12v48 - Campus Post Type | ACF relationship </h3>
+            <div>
+                <pre>
+                    When we create relationship, make sure to check the filter by post type -- to limit the access to only the post type we want to choose.
+                </pre>
+                <img src="./Images/AcfPostTypeFilter.jpg" alt="">
+                <pre>
+                    if we want only campus to campus relation
+                    just choose filter by post type = campus
+
+
+                   then, choose on the [Location Block]-> eto ung  for your ACF to show. for example on  programs. pinili nya dito programs
+                    </pre>
+
+                <img src="./Images/AcfSS.jpg" alt="">
+                Continue 12:59
+            </div>
+
+            <h3>f13v50 - Start of Javascript </h3>
+            <div>
+                <pre>
+               constructor() - yan agad ung unang gagana ung sa loob
+               export default Search;  - this line of code will allow us to import this file into our main script file
+                class Search {
+
+                        constructor(){
+
+                        }
+                    }
+
+                    export default Search;
+            </pre>
+
+                <pre>
+               on folder js/scripts.js
+               -once we import it we can call it many time we want -
+               - we can create multiple 
+                var liveSearchv2  = new Search()
+               - thats called Class
+
+
+
+                import Search     from "./modules/Search"
+
+
+
+                var liveSearch  = new Search()
+            </pre>
+                <img src="./Images/JSClass.jpg" alt="">
+
+            </div>
+            <h3>f13v51 - Open and close search overlay </h3>
+
+            <div>
+                <h5> how to attach existing jQuery from Wordpress to our main JS </h5>
+                <pre>
+                     wp_enqueue_script('main-university-js', get_theme_file_uri('/js/scripts-bundled.js'), array('jquery'), microtime() , TRUE  ); 
+                </pre>
+            </div>
+
+            <h3> f13v52 - Javascrip Live Search Time  delay</h3>
+            <div>
+
+                <h5>Much better go the Search.js file</h5>
+                <pre>
+                iniskip kona ung inputing dito kasi maxado komplikado men.
+
+                andun lahat ng detailed comment ko. sabog sabog na kasi pag dito pa nilagay
+                </pre>
+            </div>
+            <h3> f14v55 - Load WP content with JS</h3>
+            <div>
+                <pre>
+                http://domain.com/wp-json/wp/v2/posts - 10 most recent post
+                http://domain.com/wp-json/wp/v2/page - 10 most recent post
+
+            </pre>
+                <pre>
+                function - will trigger after the URL response. ( a callback )
+                $.getJSON(url, function(),)
+            </pre>
+
+                <pre>
+
+
+                $.getJSON('http://localhost:10024/wp-json/wp/v2/posts?search=' + this.searchField.val(), function(posts){
+                    alert(posts[0].title.rendered);
+                })
+            </pre>
+            </div>
+            <h3> f14v56 - Generate HTML Base on JSON </h3>
+            <div>
+                <pre>
+                      // ung 'this' daw sa this.searchField.val()
+                      // ay hindi pointin sa pinaka object
+                      // so to solve d daw un we need to
+                      // $.getJSON(url,function({}.bind(this) ) )
+                      // sa bind this ka tumingin asshole
+                      or
+                      // $.getJSON(url, posts => {})
+                      // now it does not change daw the value of this keyword
+
+                       $.getJSON('http://localhost:10024/wp-json/wp/v2/posts?search=' + this.searchField.val(), function(posts){
+                    this.resultsDiv.html(posts[0].title.rendered);
+                })
+                </pre>
+                <pre>
+                <span> in javascript every method has access to javascript name map() and it can create a new version of an array 
+                inside a map is a function that will run once in each item of the array
+                   // but its output will have commas(',')
+                    // so we use join()
+                    // join is how we can convert an array to a simple string
+
+                </span>
+
+             var testArray = ['red','orange', 'yellow']
+            this.resultsDiv.html(`
+                h2 class="search-overlay__section-title"> General Information /h2
+                ul class="link-list min-list">
+                li a href="${posts[0].link}" ${posts[0].title.rendered} /a /li
+                ${testArray.map(item => `<li> ${item}</li>`).join() }
+
+
+
+</pre>
+            </div>
+            <h3>f1457 - Conditional Template within Template Literal </h3>
+            <div>
+                <pre>
+                    punta ka sa search.js andun lahat
+               </pre>
+            </div>
+
+
+            <h3>f1459 - Searching on multiple post type</h3>
+            <div>
+                <pre>
+
+                         <h5> go to the search.js file - andun ung complete explain</h5>
+                          <span>
+                             this technique is synchronous - meaning 1by1 -- not good
+                              we create 2 $.getJSON then we combined the value using 1stArray.concat(2ndArray)
+                          </span>
+
+                           $.getJSON(universityData.root_url + '/wp-json/wp/v2/posts?search=' + this.searchField.val(), posts => {
+
+                        $.getJSON(universityData.root_url + '/wp-json/wp/v2/pages?search=' + this.searchField.val(), pages => {
+
+                            var combinedResults = posts.concat(pages);
+                    </pre>
+            </div>
+
+            <h3>f15v61 - RESP API add new Custom Field</h3>
+            <div>
+                <h5> how to add Custom value in JSON Request response</h5>
+                <pre>
+                        go to functions.php - 
+
+                    </pre>
+            </div>
+
+            <h3>f1562 - Create Custom Route REST_API</h3>
+            <div>
+
+                <h5>Go to the - inc/search-route.php andun ung best explain</h5>
+                <pre>
+
+                      <h5>IMPORTANT READ! for creating cistom routes</h5>
+                       /wp-json/wp/v2/professor?search=biology
+
+                       the reason hose professors are not showing up when i run this 
+                       search is becoz the native WordPress search Logic only searches
+                       within really obvious fields like the title field and main body element
+
+                       wordpress doesnt search wthin our custom fields
+                       and even if it did it wouldnt know how to interpret the relationships
+                       that we set up between different post_types
+
+
+                       thats why we will create our custom post type URL
+                   </pre>
+                <pre>
+                        create inc folder > create  search-route.php
+
+                        pero ilagayn muna ung code dun sa functions.php
+                        bago mag create ng custom URL sa search-route.php
+
+                        pero nung dinelet ko ung 'show_in_rest'  => true, sa 
+                        pinaka post type file - gumana  parin
+                    </pre>
+
+                <pre>
+
+                        Reason Why We Are Creating Our Own 
+                        New REST API URL
+
+                        1. Custom Search Logic
+                        2. Respond with less JSON data ( load faster for visitors )
+                        3. Send only 1 JSON request instead of 6 in our JS
+                        4. Perfect excercise for sharpening PHP
+
+
+                    </pre>
+                <pre>
+                        go to mu-plugin folder open the post-type
+
+                        show_in_rest'  => true,
+
+
+                        function university_post_types(){
+
+
+                        //Professor post type
+                        //  'rewrite' => array('slug' => 'professors'), - was removed
+                        // show_in_rest = true - you can now access the json URL - 
+                        // /wp-json/wp/v2/professor
+                        register_post_type('professor', array(
+                            'show_in_rest'  => true,
+                            'supports'      => array('title', 'editor', 'thumbnail'),
+                            'public'        => true,
+                            'labels'        => array(
+                                'name'      => 'Professor',
+                                'add_new_item'  => 'Add New Professor',
+                                'edit_item'     => 'Edit Professor',
+                                'all_items'     => 'All Professor',
+                                'singular_name' => 'Professor'
+                            ),
+                            'menu_icon' => 'dashicons-welcome-learn-more'
+                        )); 
+
+
+                    </pre>
+
+
+            </div>
+
+
+            <h3>f1563 - Create your own Raw JSON Data</h3>
+            <div>
+                <h5> Go to the search-route.php </h5>
+            </div>
+
+
+            <h3>f1564 - WP_Query and Keyword Searching</h3>
+            <div>
+                <pre>
+
+                         Go to the search-route.php 
+                    </pre>
+            </div>
+
+
+            <h3>f15v65 - JSON with multiple post_types</h3>
+            <div>
+                <pre>
+                         Go to the search-route.php 
+
+                    </pre>
+            </div>
+
+
+            <h3>f16v66 - Update Front-End JS to Use New API URL </h3>
+            <div>
+                go to search-route.php
+                go to Search.js
+            </div>
+
+            <h3>f16v67 - 067 Custom Layout & JSON based on Post Type </h3>
+            <div>
+                go to search-route.php
+                go to Search.js
+            </div>
+
+            <h3>f16v68 Search Logic That's Aware of Relationships</h3>
+            <div>
+                Searching by relationship
+
+                go on the bottom of search-route.php
+
+                we create filter - 
+            </div>
+
+            <h3> F16v69 - Search Logic That's Aware of Relationships (Part 2) </h3>
+            <div>
+                <pre>
+
+                After all the coding examples we made inside search-route.php
+               there is one problem, is that when we include the keyword on the main text editor of the WP, say 
+               </pre>
+                <img src="./Images/WP-Problem.jpg" alt="">
+                <pre>
+                    the search will still be looking on the  editor and for the
+                    keyword and thinks that it is correct
+
+                    now, the solution is to create Advance Custom Fields
+                </pre>
+
+                <img src="./Images/wysyg-editor.jpg" alt="">
+
+
+                <pre>
+                    we can remove the editor on the mu-plugins
+                    just remove the supports => array('editor')
+
+                    i remove it in the Advanced custom fiel 
+                </pre>
+            </div>
+
+            <h3>f17v072 Traditional WordPress Searching (Part 2)</h3>
+            <div>
+
+                we created search.php for search results page and page-search.php
+                for search form
+
+
+                we can call get_search_query() to display the search query
+
+                esc_html( get_search_query() )
+            </div>
+
+            <h3>f17072 Traditional WordPress Searching (Part 2)</h3>
+            <div>
+                <pre>
+                    we can create searchform.php then we can call it by get_search_form() -- make sure its a form
+                </pre>
+            </div>
+            <h3>f18v73 - User Roles and Permissions</h3>
+            <div>
+
+
+                <pre>
+
+                            subscriber - can edit only profiles
+                contributor - can create a rought draft for a page but they can't actually publish
+                author - allowed to sign in and actually create and publish content
+                live up onto the website.
+                - however, author can only edit his own post not otherss
+                editor - can edit, delete their own content and others. 
+                admin - has the full access
+
+
+                members - MemberPress | 
+                - we dont see our post_type (professors,events,campus) on add new role.
+                - is this because, this types are treated like generic blog posts meaning if we clicked on the [posts] (from addnewrole panel) and checked the boxes to grant permission to this new role that would actually frant permission to our custom post_types
+                - because new custom post_types by default inherit the permission and abilities from generic blog posts.
+                - so what we need to do is go and edit the code where we registered the events post-typess
+
+                             <h5> 
+        now with these two - events has been created in the plugin members
+                             </h5>
+        'capability_type'   => 'event',
+        'map_meta_cap'      => true,
+
+                       after doing this - we can then set the user permission on the user that we enroll
+                            - make sure to add the grant role also in ADMIN
+                        </pre>
+
+            </div>
+            <h3>f18v074 Open Registration</h3>
+            <div>
+                <pre>
+                    Settings> check any one can register
+
+                       if( is_user_logged_in() ) { ?
+                               a href=" echo wp_logout_url() ; " class="btn btn--small btn--orange float-left push-right btn--with-photo"
+                                   span>  echo get_avatar();  /span
+                                   span>Logout/span
+                               /a 
+                         } else { 
+
+
+                    get_avatar() - 1st arg - ID or email
+                                 - size of the image
+                                 - get_current_user_id()
+                                 - 60
+                </pre>
+            </div>
+
+            <h3>f18v075 - Registration part 2 </h3>
+            <div>
+                is user_user_logged_in() - checks the user if logged in
+                get_avatar(get_current_user_id(), 30)  - 1st arg the Id, 2nd size
+                wp_login_url() - login url
+                wp_registration() - register
+                wp_logout_url() - logout
+
+
+                change logo link on login
+                - add_filter('login_headerurl');
+
+
+
+                /*
+                this script will fire on login to override the css
+                */
+                add_action('login_enqueue_scripts', 'ourLoginCSS');
+
+                function ourLoginCSS(){
+                wp_enqueue_style('university_main_styles', get_stylesheet_uri(), NULL, microtime() ); 
+                }
+
+            </div>
+
+
+            <h3>f19v76 - CRUD My Notes</h3>
+            <div>
+                <h5> Go to page-my-notes.php to see comments</h5>
+                <pre>
+                    if we want to custom redirect the user
+                    in the main page set this
+
+                    if(!is_user_logged_in()) {
+                    wp_redirect(esc_url(site_url('/)))
+
+                    }
+
+
+                    <h5>In wordpress whenever we see database as a value we use esc_attr()</h5>
+                    echo esc_attr(get_the_title())
+
+
+                </pre>
+            </div>
+            <h3>f19v77 -  CRUD My Notes part 2</h3>
+            <div>
+                <pre>
+                    he set up the JS . you can check it on MyNotes.js 
+                </pre>
+            </div>
+
+            <h3>f19078 My notes - CRUD Rest API</h3>
+            <div>
+                <h5> NONCE Very Important</h5>
+                <pre>
+                        wp_localize_script('main-university-js', 'universityData', array(
+
+                        /* 
+                        nonce - wp_create_nonce - wordPress will not allow us to delete 
+                        data in Javascript - 
+                                - its a secret data
+                        Nonce - stands for number use once or number one 
+                        whenever we succesfully logged in, wordpress will gives us NONCE - a secret number
+                        */
+                    'root_url'  => get_site_url(),
+                        'nonce' =>  wp_create_nonce('wp_rest)   
+
+                    ) );
+
+
+                </pre>
+                <pre>
+
+                </pre>
+            </div>
+
+            <h3>f19v079 Delete Posts with the REST API </h3>
+            <div>
+                <pre>
+                    check the page-my-notes.php - we added, data-id= the_ID() dun sa input field
+
+                    so we can now use it  in $.ajax
+                </pre>
+
+                <pre>
+                          /*
+           xhr - so we can send a parameter to modify request jquery to send out
+           beforeSend: (xhr) 
+
+           all modern browser have a method name setRequestHeader
+           setRequestHeader - is how we can pass along a little bit of extra information with your request
+            setRequestHeader() - 1st arg, need to be perfect match what wordpress is going to lookout for - X-WP-Nonce
+            setRequestHeader() - 2nd arg - is the secrret number
+
+            to get the ID from input field from the HTML part (pag-my-note.php)
+            we need to give parameter on function deleteNote() - so (e) or event
+
+            sabi daw. when we click the delete button, the event(){} will give us information so now we can use the (e) parameter
+
+
+                   */
+            deleteNote(e){
+
+                /*this variable will point list item on HTML that contains the delete button 
+
+                thisNote.data('id') - now we can access the data-id on HTML
+                */
+                var thisNote = $(e.target).parents('li');
+
+               $.ajax({
+
+                   beforeSend: (xhr)=> {
+                       xhr.setRequestHeader('X-WP-Nonce', universityData.nonce  )
+                   },
+                   url: universityData.root_url + '/wp-json/wp/v2/note/' + thisNote.data('id'),
+                   type: 'DELETE',
+                   success: (response) => {
+                     console.log('Congrats');  
+                     console.log(response);  
+                   },
+                   error: (response) => {
+                       console.log('Error meneee');
+                     console.log(response);  
+                   }
+               });
+            }
+
+
+                </pre>
+                <h5>EDIT NOTE</h5>
+                <pre>
+
+    /* find the edit button and remove readonly attribute */
+      editNote(e){
+
+          var editNote = $(e.target).parents('li');
+
+          editNote.find('.note-title-field, .note-body-field').removeAttr('readonly').addClass('note-active-field');
+          editNote.find('.update-note').addClass('update-note--visible');
+      }
+                </pre>
+            </div>
+
+
+            <h3> f19v80 - Edit And Update Note </h3>
+            <div>
+                <pre>
+                    just go to the MyNote.js
+                </pre>
+            </div>
+
+            <h3>f19v81-82</h3>
+            <div>
+                <h5>CRUD - go to page-my-notes.php, MyNotes.js</h5>
+                <pre>
+                    everything is there
+                </pre>
+            </div>
+
+            <h3>f19v83 - Note Permission and Security Part 1</h3>
+            <div>
+                <pre>
+
+            Tinamad
+                </pre>
+            </div>
+            <h3>f19v84 - Note Permission and Security Part 2</h3>
+            <div>
+                <h5>prevents user to post HMTL before we save it on data bse</h5>
+                <pre>
+                                function makeNotePrivate($data){
+                /* Intercepts any who are posting HTML before we save it to Database    */
+
+                if($data['post_type'] == 'note'){
+
+                    $data['post_content'] = sanitize_textarea_field($data['post_content']);
+                    $data['post_title'] = sanitize_text_field($data['post_title']);
+                }
+
+                // Disables user that is not logged in to see content
+                if($data['post_type'] == 'note' AND $data['post_status'] != 'trash'){
+                    $data['post_status'] = "private";
+                }
+                return $data;
+            }
+            add_filter('wp_insert_post_data', 'makeNotePrivate');
+                </pre>
+            </div>
+
+            <h3>f19v85 - Per-user Post Limit</h3>
+            <div>
+                <pre>
+                 we set the global variable on function.php 
+
+
+                // this is to get a count of post - so we can remove the alert message when deleting notes
+                register_rest_field('note', 'userNoteCount', array(
+                    //count_user_post() - 2 args - 1st - user we want to count. 2nd the post type. 
+
+                    'get_callback'      => function(){ return  count_user_posts(get_current_user_id(), 'note'); }
+
+                ));   
+                </pre>
+
+                <pre>
+                    when delete button happens the alert message will remove the class
+
+
+
+                     deleteNote(e){
+
+
+                    var thisNote = $(e.target).parents('li');
+
+                    $.ajax({
+
+                        beforeSend: (xhr)=> {
+                            xhr.setRequestHeader('X-WP-Nonce', universityData.nonce  )
+                        },
+                        url: universityData.root_url + '/wp-json/wp/v2/note/' + thisNote.data('id'),
+                        type: 'DELETE',
+                        success: (response) => {
+
+                            thisNote.slideUp('slow');
+                            console.log('Congrats');  
+                            console.log(response);  
+
+                            if(response.userNoteCount  5 ) 
+                               $('.note-limit-message').removeClass('active') 
+                            }
+                        ,
+
+                        wala ung less than and greater than
+
+                        error: (response) = {
+                            console.log('Error meneee');
+                            console.log(response);  
+                        }
+                    });
+
+                }
+                </pre>
+            </div>
+
+            <h3>f20v86 - Users Like Content part 1</h3>
+            <div>
+
+                <pre>
+                   Steps 
+                   1. we create Custom Post Type - Like 
+                   2. we create the PHP route - see like-route.php
+                   3. we create Advance custom field for the ID of clicker
+                   4. we set event click on JS
+                   5. we get the ID number on frontentd
+                   6. create your NONCE on the condition when liking.
+                       6.a - create it in JS 
+                       6.b - so PHP will trust that we are confirmed user
+                   7. almost forgotten - we set filter in HTML side, meta_query - see single-professor.php
+
+               </pre>
+
+                <pre>
+                    Create Custom Post Type 'like'
+                    Create Advanced Custom Field 'Liked Professor ID'
+                        - choose number - for field type
+                            - this will provide extra layer of validation
+
+                </pre>
+
+                <pre>
+                     $likeCount =  new WP_Query(array(
+
+                    'post_type'     => 'like',
+                    'meta_query'    => array(
+                        array(
+                        'key'       => 'liked_professor_id',
+                        'value'     => get_the_ID(),
+                        'compare'   => '='
+                    ))
+                ));
+
+                </pre>
+
+                <pre>
+                   will gives us the total number of posts.
+                    echo $likeCount->found_posts;
+                </pre>
+            </div>
+
+
+            <h3>f20v87 - Part 2 </h3>
+            <div>
+                <pre>
+                    $(e.target).closest('className') - when someone clicks on the like box they 
+                    might not actually click on the overall grey box itself
+                    they might click on the heart icon or the little number
+
+                    - with this whatever element user clicks find the closest ancestor,
+                    meaning parent or grandparent that matches this selector
+
+                    - this line of code will guarantee that this variable will always be pointing towards the relevant like box
+
+                </pre>
+            </div>
+
+            <h3> f20v88 - part 3 </h3>
+            <div>
+                <pre>
+                we create on /inc/Like-route.php  rest API
+            then we can then call it now on JS using $.ajax
+
+
+
+            goto like-route.php and like.JS
+
+           </pre>
+
+            </div>
+
+            <h3>f20v91 - Complete the Like box</h3>
+            <div>
+                <pre>
+                    go to like.js and like-route.php and single-professor.php
+                </pre>
+            </div>
+
+            <h3>f2192 - Going Live! </h3>
+            <div>
+                <pre>
+
+                </pre>
+            </div>
+
+            <h3>f2194 - WP migrate Database </h3>
+            <div>
+                <pre>
+                    WP Migrate Database: by Delicious Brains
+
+                    - so we can import our DB
+                    - 1st Select Export File
+                        - Find and replace
+                        - your local URL and Live URL
+                    - //yourLocal.URL  ->  //yourLive.URL
+                    - perform 1 row only
+                     READY to EXPORT!
+                </pre>
+            </div>
+
+
+            <h3> f21v95 - Databse Config for 2 site environment </h3>
+
+            <div>
+                <pre>
+                    within the folder on wp-config.php - create local.php.
+                    then on wp-config.php - create if statement
+                        - if the local.php exists
+                        - this if condition will properly connect to our local DB and Live DB
+
+
+                    if(file_exists(dirname__file__) . '/local.php'){
+
+                    // Local Database Setting
+
+                    define( 'DB_NAME', 'local' );
+                    define( 'DB_USER', 'root' );
+                    define( 'DB_PASSWORD', 'root' );
+                    define( 'DB_HOST', 'localhost' );
+
+                    } else {
+
+                    // Live DB Setting
+                        define( 'DB_NAME', 'Live DB name' );
+                        define( 'DB_USER', 'Live Username' );
+                        define( 'DB_PASSWORD', 'Live PW' );
+                        define( 'DB_HOST', 'localhost' );
+                    }
+
+                    DONT Forget SALT!
+
+                </pre>
+            </div>
+
+
+            <h3>f21v96 - Ignoring certain files with GIT </h3>
+            <div>
+                <pre>
+                    Create git Repo - we have one!
+                    bitbucket - offers Private git repo
+                    Github also does !
+                </pre>
+
+                <pre>
+                  - we  do this becoz - at some point we dont need the local.php file so better not to upload 
+                  that on live server
+                   - if we want to ignore certain file to push on live server do this
+
+                    on local files, the root of folder. create .gitignore 
+                    - then app/local.php
+                </pre>
+
+                <pre>
+                    deployhq - 1 project free - 10 deployments per day
+                    deployBot - not free
+                    FTPLOY - 1 free account unlimited deploy per day
+                </pre>
+            </div>
+
+            <h3>f21v97 - Automatic Git Deployments to Webhost</h3>
+            <div>
+                <pre>
+                    We create profile in DeployHQ - 
+                        - choose which service - Github, Bitbucket, Codebase, GitLab
+                        - grant access menu
+                        - make sure we are login to git, Github or whatever
+                        - after granting access, we are now connected to git repo
+                        - click the name of the website we integrate
+
+                        - this time, we will connect the webhost to connect to DeployHQ
+                        - never use FTP - never ever daw!
+                        - FTP - sends your username and password unencrypted
+                        - instead we use SFTP  - SSH/SFTP
+                        - now, we fill the details, just like in FTP zilla
+                        - hostname ftp.yourWebsite.URL / ftp.brads.sgedu.site
+                        - port: dont use the default daw - he uses 16765 - i dont know where did he get that
+                        - get the username in FTP accounts
+                        - check the - Use SSH key rather than password for authentication
+                        - then DeployDQ will give us the SSH key 
+                        - go to cpanel - SSH - and paste the code - just paste the code the upload.
+                            no need to create password or account - that according to the video.
+                        - Deployment Path - public_html/  05:34
+                        - [Deployment Option] Branch to Deploy from - MASTER
+                        - Subdirectory to deploy from -  app/
+                            - point it towards the folder that contains all of the main WP files
+                        - then CREATE SERVER - all the unfilled field - just ignore
+                </pre>
+                <pre>
+                        Create our 1st deployment
+                            - click > deployment > new deployment
+                                -  to send files to our webhost
+                            - start manually - click button > deploy
+                            - transfer succesfull on the video
+                                - but the website is error stablishing databse
+                                - this is SiteGround
+                            - if this happens - go to cPanel, mySql Database
+                            - Add user to a Database - then Grant all privileges to this user
+                                - now our website is connected. 
+                       </pre>
+
+                <pre>
+                    Now to enable the publishing on commandline from local file to server
+                      - in DeployHQ > server & groups > Click the SSH [the red button with pencil] click edit
+                      -  then scroll to the buttom, Enable auto Deployment
+                          - it auto enabled - just take/copy the URL 
+                              - its a webhook, to include within our Github or Bitbucket setting screen
+                              
+                     - Now, go to main file source of the code Bitbucket/Github  > go to settings >
+                         - look for Webhooks > add webhook > title doesnt matter, then paste the URL, then he just hit save
+                     - now when we git pushlish origin master, the website will also change on live server
+                      
+                       </pre>
+
+            </div>
+            
+            <h3> f22v98 - Setting Up New Projects in VAGRANT </h3>
+            <div>
+                <pre>
+                    create main folder - pets>app
+                    open to editor config.yaml
+                        - look for apache
+                        - copy and past below vHost
+                        - change the name av_eh5v66prqxfo: to anything
+                        - change server name to pets.dev
+                        - change serveraliases: - www.pets.dev
+                        - docroot - /var/www/pets/app
+                        - below the directories 
+                            - avd_r8x39n4643db - change to new string - avd_r8x123
+                        - path : /var/www/pets/app
+                        - below files_match: avfm_d8nrm806y8lz - change to any
+                        - below provider - avfm_ggoe69leirs7 - change to new string
+                        - below provider again - avfm_pj8nghmcw7ee: - change to any
+                        - 
+                        
+                        open commandline
+                        - vagrant up - to start the local server
+                        - vagrant halt to stop
+                        now go to commandline to rebuild 
+                        - type vagrant provision  
+                        
+                        I CANNOT MAKE IT WORK!
+                </pre>
+            </div>
+
+
+
+        </div>
+
+
+
+
+
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut dicta facilis quis excepturi, labore eaque totam eligendi odio iure, aspernatur culpa provident magnam harum exercitationem rem impedit, quia deleniti? Dignissimos tempore, numquam ducimus esse. Itaque ut nemo deserunt, facere eligendi earum aspernatur doloremque aliquid, eos ad ea. Culpa, veniam, beatae!
+
+
+
+
+        <script src="../jquery-ui-1.12.1/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+        <script>
+            $( function() {
+                $( "#accordion" ).accordion({
+                    collapsible: true,
+                    heightStyle: "content"
+
+                });
+
+            } );
+        </script>
+    </body>
+</html>

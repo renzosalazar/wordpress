@@ -1,0 +1,58 @@
+{
+    "apiVersion": 2,
+    "title": "Block Development",
+    "name": "block-getting-started/block-getting-started-1",
+    "category": "layout",
+    "keywords": ["tester"],
+    "icon": "universal-access-alt",
+    "editorScript": "file:./block.js",
+    "editorStyle": "file:./editor.css",
+    "style": "file:./style.css",
+    "render": "file:./render.php",
+    "supports": {
+        "anchor": true,
+        "align":[ "left", "right", "full" ],
+        "ariaLabel": true,
+        "color": { 
+            "background": true, 
+            "gradients" : true 
+        }
+    },
+    "attributes": {
+            "content": {
+                "type": "string",
+                "selector": "p"
+            },
+            "check_filters":{
+                "type": "string",
+                "selector": ".position"
+            },
+            "and_or_condition":{
+                "type": "string",
+                "selector": ".condition"
+            },
+            "align": {
+                "type": "string",
+                "default": "left"
+            },
+            "pagination_number": {
+                "type": "integer",
+                "default": 3
+            },
+            "pagination_type" : {
+                "type": "string",
+                "selector": ".pagination-type",
+                "default": "nm"
+            },
+            "load_more_btn_txt" : {
+                "type": "string",
+                "selector" : "load-more-string",
+                "default": "Load More"
+            }
+    },
+    "example": {
+        "attributes": {
+            "content": "Hello World"
+        }
+    }
+}

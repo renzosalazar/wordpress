@@ -1,0 +1,9 @@
+/* green background for editor */
+/* .wp-block-block-getting-started-block-getting-started-1 {
+    background: #090;
+    color: white;
+    padding: 20px;
+} */
+.editor-styles-wrapper .components-radio-control__input[type=radio]:checked:before{
+    margin: 0px 0px 9px;
+}
